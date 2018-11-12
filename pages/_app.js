@@ -27,16 +27,12 @@ export default class MyApp extends App {
                         background-color: black;
                         font-family: system-ui;
                         line-height: 1;
-                        text-align: center;
+                        min-height: 100vh;
                     }
 
                     .app {
-                        width: 100vw;
-                        height: 100vh;
                         display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        padding-bottom: 10vh;
+                        align-items: space-between;
                     }
                 `}</style>
             </Container>

@@ -1,18 +1,22 @@
-import { useRoute } from "../hooks";
+import Pages from "../components/Pages";
 import Station from "../components/Station";
+import useStations from "../hooks/useStations";
 
 export default function Index() {
-    const { origin, destination, reverse } = useRoute();
-
-    if (!origin || !destination) {
-        return null;
-    }
+    const stations = useStations();
 
     return (
-        <div>
-            <Station label={`bikes at ${origin.name}`} count={origin.bikes} />
-            <Station label={`slots at ${destination.name}`} count={destination.slots} />
-            <button onClick={reverse}>Reverse</button>
-        </div>
+        <>
+            <Pages>
+                {stations.map(station => (
+                    <Station
+                        key={station.id}
+                        name={station.name.slice(5)}
+                        available={station.bikes}
+                        total={station.bikes + station.slots}
+                    />
+                ))}
+            </Pages>
+        </>
     );
 }

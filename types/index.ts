@@ -1,11 +1,9 @@
 export type Station = {
-    id: StationId;
-    bikes: string;
-    slots: string;
+    id: string;
+    bikes: number;
+    slots: number;
     name: string;
 };
-
-export type StationId = "001" | "226";
 
 export type Stations = {
     office: Station | null;
