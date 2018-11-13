@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import Layout from "../components/Layout";
 import App, { Container } from "next/app";
 
 export default class MyApp extends App {
@@ -18,10 +17,7 @@ export default class MyApp extends App {
                     <meta name="apple-mobile-web-app-capable" content="yes" />
                     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
                 </Head>
-                <Layout>
-                    <Layout.NavBar />
-                    <Component {...pageProps} />
-                </Layout>
+                <Component {...pageProps} />
                 <style jsx global>{`
                     * {
                         margin: 0;

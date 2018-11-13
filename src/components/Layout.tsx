@@ -1,5 +1,5 @@
 type LayoutProps = {
-    children: any;
+    children?: any;
 };
 
 export default function Layout({ children }: LayoutProps) {
@@ -17,7 +17,7 @@ export default function Layout({ children }: LayoutProps) {
 }
 
 type NavBarProps = {
-    children: any;
+    children?: any;
 };
 
 Layout.NavBar = function({ children }: NavBarProps) {
@@ -36,7 +36,7 @@ Layout.NavBar = function({ children }: NavBarProps) {
 
 type ScreenProps = {
     title: string;
-    children: any;
+    children?: any;
     justify: "start" | "end";
 };
 

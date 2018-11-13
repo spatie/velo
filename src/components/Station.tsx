@@ -1,10 +1,15 @@
 type Props = {
     available: number;
     total: number;
+    loaded: boolean;
 };
 
-export default function Station({ available, total }: Props) {
+export default function Station({ available, total, loaded }: Props) {
     let slotColor = available < 3 ? "#85144b" : "#48d093";
+
+    if (!loaded) {
+        slotColor = "grey";
+    }
 
     return (
         <div className="slots">

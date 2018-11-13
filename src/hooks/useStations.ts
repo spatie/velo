@@ -1,5 +1,18 @@
 import { LatLng } from "../types";
 import { useEffect, useState } from "react";
+import stations from "../data/stations";
+
+const emptyStations: Station[] = stations.map(station => ({
+    id: station.id,
+    name: station.name,
+    bikes: 0,
+    slots: parseInt(station.bikes) + parseInt(station.slots),
+    position: {
+        latitude: parseFloat(station.lat),
+        longitude: parseFloat(station.lon),
+    },
+    loaded: false,
+}));
 
 type StationFromServer = {
     id: string;
@@ -16,10 +29,11 @@ type Station = {
     bikes: number;
     slots: number;
     position: LatLng;
+    loaded: boolean;
 };
 
 export default function useStations(): Station[] {
-    const [stations, setStations] = useState<Station[]>([]);
+    const [stations, setStations] = useState<Station[]>(emptyStations);
 
     useEffect(() => {
         getStations().then(setStations);
@@ -52,6 +66,7 @@ function getStations(): Promise<Station[]> {
                     latitude: parseFloat(station.lat),
                     longitude: parseFloat(station.lon),
                 },
+                loaded: true,
             }));
         });
 }
