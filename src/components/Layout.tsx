@@ -1,3 +1,6 @@
+import SwipeableViews from "react-swipeable-views";
+import { virtualize } from "react-swipeable-views-utils";
+
 type LayoutProps = {
     children?: any;
 };
@@ -37,10 +40,9 @@ Layout.NavBar = function({ children }: NavBarProps) {
 type ScreenProps = {
     title: string;
     children?: any;
-    justify: "start" | "end";
 };
 
-Layout.Screen = function({ title, children, justify = "start" }: ScreenProps) {
+Layout.Screen = function({ title, children }: ScreenProps) {
     return (
         <div className="screen">
             <h1 className="title">{title}</h1>
@@ -50,6 +52,7 @@ Layout.Screen = function({ title, children, justify = "start" }: ScreenProps) {
                     display: flex;
                     flex-direction: column;
                     min-height: calc(100vh - 44px);
+                    position: relative;
                 }
 
                 .title {
@@ -62,10 +65,31 @@ Layout.Screen = function({ title, children, justify = "start" }: ScreenProps) {
                     flex: 1;
                     display: flex;
                     flex-direction: column;
-                    justify-content: ${`flex-${justify}`};
+                    justify-content: flex-end;
                     padding: 17px 17px 34px;
                 }
             `}</style>
         </div>
+    );
+};
+
+type ScreensProps<T> = {
+    items: T[];
+    title: (item: T) => string;
+    children: (item: T) => any;
+};
+
+const VirtualizedSwipebleViews = virtualize(SwipeableViews);
+
+Layout.Screens = function<T>({ items, title, children }: ScreensProps<T>) {
+    return (
+        <VirtualizedSwipebleViews
+            slideCount={items.length}
+            slideRenderer={({ key, index }: { key: number; index: number }) => (
+                <Layout.Screen key={key} title={title(items[index])}>
+                    {children(items[index])}
+                </Layout.Screen>
+            )}
+        />
     );
 };

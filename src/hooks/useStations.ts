@@ -35,15 +35,15 @@ type Station = {
 export default function useStations(): Station[] {
     const [stations, setStations] = useState<Station[]>(emptyStations);
 
-    useEffect(() => {
-        getStations().then(setStations);
+    // useEffect(() => {
+    //     getStations().then(setStations);
 
-        const interval = setInterval(() => {
-            getStations().then(setStations);
-        }, 15 * 1000);
+    //     const interval = setInterval(() => {
+    //         getStations().then(setStations);
+    //     }, 15 * 1000);
 
-        return () => clearInterval(interval);
-    }, []);
+    //     return () => clearInterval(interval);
+    // }, []);
 
     return stations;
 }

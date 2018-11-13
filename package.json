@@ -17,7 +17,8 @@
     "next": "^7.0.2",
     "react": "^16.7.0-alpha",
     "react-dom": "^16.7.0-alpha",
-    "react-swipeable-views": "^0.13.0"
+    "react-swipeable-views": "^0.13.0",
+    "react-swipeable-views-utils": "^0.13.0"
   },
   "devDependencies": {
     "@types/next": "^7.0.1",

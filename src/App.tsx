@@ -2,33 +2,43 @@ import Layout from "./components/Layout";
 import Compass from "./components/Compass";
 import Station from "./components/Station";
 import useStations from "./hooks/useStations";
-import SwipeableViews from "react-swipeable-views";
+import useCompassBearing from "./hooks/useCompassBearing";
+import useCurrentPosition from "./hooks/useCurrentPosition";
 
 export default function App() {
     const stations = useStations();
+    const compassBearing = useCompassBearing();
+    const currentPosition = useCurrentPosition();
 
     return (
         <Layout>
             <Layout.NavBar />
-            <SwipeableViews>
-                {stations.map(station => (
-                    <Layout.Screen key={station.id} title={station.name.slice(5)} justify="end">
+            <Layout.Screens items={stations} title={station => station.name.slice(5)}>
+                {station => (
+                    <div>
                         <div className="compass">
-                            <Compass to={station.position} />
+                            <Compass
+                                from={currentPosition}
+                                to={station.position}
+                                offset={compassBearing}
+                            />
                         </div>
                         <Station
                             available={station.bikes}
                             total={station.bikes + station.slots}
                             loaded={station.loaded}
                         />
-                    </Layout.Screen>
-                ))}
-            </SwipeableViews>
+                    </div>
+                )}
+            </Layout.Screens>
             <style jsx>{`
                 .compass {
                     display: flex;
                     justify-content: center;
-                    margin-bottom: 34px;
+                    position: absolute;
+                    top: 150px;
+                    left: 0;
+                    width: 100%;
                 }
             `}</style>
         </Layout>

@@ -1,57 +1,47 @@
 import { useMemo } from "react";
 import { LatLng } from "../types";
 import useBearing from "../hooks/useBearing";
-import useCompass from "../hooks/useCompass";
-import usePosition from "../hooks/usePosition";
+import useDistance from "../hooks/useDistance";
 
 type Props = {
+    from: LatLng;
     to: LatLng;
+    offset: number;
 };
 
-export default function Compass({ to }: Props) {
-    const from = usePosition();
-    const direction = useCompass();
+export default function Compass({ from, to, offset }: Props) {
+    const distance = useDistance(from, to);
     const bearing = useBearing(from, to);
-    const rotation = bearing - direction;
+    const rotation = bearing - offset;
 
     return useMemo(
         () => (
             <div className="compass">
                 <div className="north" />
-                <div className="south" />
                 <style jsx>{`
                     .compass {
-                        width: 10px;
+                        width: 100px;
                         height: 100px;
                         position: relative;
-                        border-radius: 10px;
-                        overflow: hidden;
-                        transform: rotate(${rotation}deg) translateZ(0);
-                        transition: transform 0.1s ease-out;
-                    }
-
-                    .north,
-                    .south {
-                        display: block;
-                        width: 10px;
-                        height: 50px;
-                        position: absolute;
-                        background-color: white;
+                        border-radius: 100px;
+                        box-shadow: 0 0 0 5px white;
                     }
 
                     .north {
+                        display: block;
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 20px;
+                        position: absolute;
                         top: 0;
                         left: 0;
                         background-color: red;
-                    }
-
-                    .south {
-                        bottom: 0;
-                        left: 0;
+                        transform: translate(44px, -12px) rotate(${rotation}deg);
+                        transform-origin: 6px 62px;
                     }
                 `}</style>
             </div>
         ),
-        [rotation],
+        [rotation, distance],
     );
 }
