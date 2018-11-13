@@ -4,7 +4,7 @@ type Props = {
 };
 
 export default function Station({ available, total }: Props) {
-    let slotColor = available < 3 ? "#85144b" : "#3D9970";
+    let slotColor = available < 3 ? "#85144b" : "#48d093";
 
     return (
         <div className="slots">
@@ -13,10 +13,10 @@ export default function Station({ available, total }: Props) {
             ))}
             <style jsx>{`
                 .slots {
-                    --slot-size: calc((100vw - 34px) / 11);
+                    --slot-size: calc((100vw - 34px) / 13);
                     --slot-color: ${slotColor};
                     display: grid;
-                    grid-template-columns: repeat(6, var(--slot-size));
+                    grid-template-columns: repeat(7, var(--slot-size));
                     grid-gap: var(--slot-size);
                 }
 

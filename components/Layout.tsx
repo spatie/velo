@@ -1,7 +1,5 @@
-import { ReactElement } from "react";
-
 type LayoutProps = {
-    children: ReactElement<any>;
+    children: any;
 };
 
 export default function Layout({ children }: LayoutProps) {
@@ -19,7 +17,7 @@ export default function Layout({ children }: LayoutProps) {
 }
 
 type NavBarProps = {
-    children: ReactElement<any>;
+    children: any;
 };
 
 Layout.NavBar = function({ children }: NavBarProps) {
@@ -36,13 +34,13 @@ Layout.NavBar = function({ children }: NavBarProps) {
     );
 };
 
-type TitleBarProps = {
+type ScreenProps = {
     title: string;
-    children: ReactElement<any>;
+    children: any;
     justify: "start" | "end";
 };
 
-Layout.Screen = function({ title, children, justify = "start" }: TitleBarProps) {
+Layout.Screen = function({ title, children, justify = "start" }: ScreenProps) {
     return (
         <div className="screen">
             <h1 className="title">{title}</h1>
