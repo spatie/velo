@@ -1,22 +1,22 @@
-import Pages from "../components/Pages";
 import Station from "../components/Station";
 import useStations from "../hooks/useStations";
+import SwipeableViews from "react-swipeable-views";
+import Layout from "../components/Layout";
 
 export default function Index() {
     const stations = useStations();
 
     return (
-        <>
-            <Pages>
-                {stations.map(station => (
+        <SwipeableViews>
+            {stations.map(station => (
+                <Layout.Screen title={station.name.slice(5)} justify="end">
                     <Station
                         key={station.id}
-                        name={station.name.slice(5)}
                         available={station.bikes}
                         total={station.bikes + station.slots}
                     />
-                ))}
-            </Pages>
-        </>
+                </Layout.Screen>
+            ))}
+        </SwipeableViews>
     );
 }

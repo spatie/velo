@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Layout from "../components/Layout";
 import App, { Container } from "next/app";
 
 export default class MyApp extends App {
@@ -10,11 +11,17 @@ export default class MyApp extends App {
             <Container>
                 <Head>
                     <title>Velo</title>
-                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+                    />
+                    <meta name="apple-mobile-web-app-capable" content="yes" />
+                    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
                 </Head>
-                <div className="app">
+                <Layout>
+                    <Layout.NavBar />
                     <Component {...pageProps} />
-                </div>
+                </Layout>
                 <style jsx global>{`
                     * {
                         margin: 0;
@@ -28,11 +35,6 @@ export default class MyApp extends App {
                         font-family: system-ui;
                         line-height: 1;
                         min-height: 100vh;
-                    }
-
-                    .app {
-                        display: flex;
-                        align-items: space-between;
                     }
                 `}</style>
             </Container>

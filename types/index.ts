@@ -4,8 +4,3 @@ export type Station = {
     slots: number;
     name: string;
 };
-
-export type Stations = {
-    office: Station | null;
-    train: Station | null;
-};
