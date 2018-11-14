@@ -5,7 +5,7 @@ type DeviceOrientationEvent = {
     webkitCompassHeading: number;
 };
 
-export default function useCompass(): number {
+export default function useDeviceOrientation(): number {
     const [direction, setDirection] = useState(0);
 
     useEffect(() => {

@@ -2,13 +2,13 @@ import Layout from "./components/Layout";
 import Compass from "./components/Compass";
 import Station from "./components/Station";
 import useStations from "./hooks/useStations";
-import useCompassBearing from "./hooks/useCompassBearing";
 import useCurrentPosition from "./hooks/useCurrentPosition";
+import useDeviceOrientation from "./hooks/useDeviceOrientation";
 
 export default function App() {
     const stations = useStations();
-    const compassBearing = useCompassBearing();
     const currentPosition = useCurrentPosition();
+    const deviceOrientation = useDeviceOrientation();
 
     return (
         <Layout>
@@ -17,11 +17,13 @@ export default function App() {
                 {station => (
                     <div>
                         <div className="compass">
-                            <Compass
-                                from={currentPosition}
-                                to={station.position}
-                                offset={compassBearing}
-                            />
+                            {currentPosition && (
+                                <Compass
+                                    from={currentPosition}
+                                    to={station.position}
+                                    offset={deviceOrientation}
+                                />
+                            )}
                         </div>
                         <Station
                             available={station.bikes}

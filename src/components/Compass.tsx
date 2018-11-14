@@ -17,27 +17,39 @@ export default function Compass({ from, to, offset }: Props) {
     return useMemo(
         () => (
             <div className="compass">
-                <div className="north" />
+                <div className="direction" />
+                <div className="distance">{distance} M</div>
                 <style jsx>{`
                     .compass {
-                        width: 100px;
-                        height: 100px;
+                        --compass-size: 125px;
+                        --direction-size: 12px;
+
+                        width: var(--compass-size);
+                        height: var(--compass-size);
                         position: relative;
-                        border-radius: 100px;
-                        box-shadow: 0 0 0 5px white;
+                        border-radius: var(--compass-size);
+                        background-color: #222;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
 
-                    .north {
+                    .direction {
                         display: block;
-                        width: 12px;
-                        height: 12px;
-                        border-radius: 20px;
+                        width: var(--direction-size);
+                        height: var(--direction-size);
+                        border-radius: var(--direction-size);
                         position: absolute;
                         top: 0;
                         left: 0;
-                        background-color: red;
-                        transform: translate(44px, -12px) rotate(${rotation}deg);
-                        transform-origin: 6px 62px;
+                        background-color: #555;
+                        transform: translate(
+                                calc((var(--compass-size) - var(--direction-size)) / 2),
+                                0
+                            )
+                            rotate(${rotation}deg);
+                        transform-origin: calc(var(--direction-size) / 2)
+                            calc(var(--compass-size) / 2);
                     }
                 `}</style>
             </div>
