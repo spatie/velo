@@ -1,6 +1,6 @@
 import { LatLng } from "../types";
-import { useEffect, useState } from "react";
 import stations from "../data/stations";
+import { useEffect, useState } from "react";
 
 const emptyStations: Station[] = stations.map(station => ({
     id: station.id,
@@ -48,20 +48,23 @@ export default function useStations(): Station[] {
     return stations;
 }
 
-function getStations(): Promise<Station[]> {
-    return fetch("/api/stations")
-        .then(response => response.json())
-        .then((stations: StationFromServer[]) => {
-            return stations.map(station => ({
-                id: station.id,
-                name: station.name,
-                bikes: parseInt(station.bikes),
-                slots: parseInt(station.slots),
-                position: {
-                    latitude: parseFloat(station.lat),
-                    longitude: parseFloat(station.lon),
-                },
-                loaded: true,
-            }));
-        });
+async function getStations(): Promise<Station[]> {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/stations`);
+        const stations: StationFromServer[] = await response.json();
+
+        return stations.map(station => ({
+            id: station.id,
+            name: station.name,
+            bikes: parseInt(station.bikes),
+            slots: parseInt(station.slots),
+            position: {
+                latitude: parseFloat(station.lat),
+                longitude: parseFloat(station.lon),
+            },
+            loaded: true,
+        }));
+    } catch (error) {
+        return emptyStations;
+    }
 }

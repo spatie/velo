@@ -1,4 +1,4 @@
 export type LatLng = {
-    latitude: float;
-    longitude: float;
+    latitude: number;
+    longitude: number;
 };

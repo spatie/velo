@@ -1,23 +1,14 @@
 const express = require("express");
-const axios = require("axios");
-const next = require("next");
+const cors = require("cors");
+const port = parseInt(process.env.PORT, 10) || 4000;
 
-const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const app = express();
 
-app.prepare().then(() => {
-    const server = express();
+app.use(cors());
 
-    server.get("/api/stations", require("./api/stations"));
+app.get("/api/stations", require("./api/stations"));
 
-    server.get("*", (req, res) => {
-        return handle(req, res);
-    });
-
-    server.listen(port, err => {
-        if (err) throw err;
-        console.log(`> Ready on http://localhost:${port}`);
-    });
+app.listen(port, err => {
+    if (err) throw err;
+    console.log(`> API ready on http://localhost:${port}`);
 });
