@@ -1,6 +1,6 @@
 import { LatLng } from "../types";
 import stations from "../data/stations";
-import { useEffect, useState } from "react";
+import React, { createContext, Component } from "react";
 
 const emptyStations: Station[] = stations.map(station => ({
     id: station.id,
@@ -32,20 +32,36 @@ type Station = {
     loaded: boolean;
 };
 
-export default function useStations(): Station[] {
-    const [stations, setStations] = useState<Station[]>(emptyStations);
+const StationsContext = createContext<Station[]>(emptyStations);
 
-    useEffect(() => {
-        getStations().then(setStations);
+export default StationsContext;
+
+type State = {
+    stations: Station[];
+}
+
+export class StationsProvider extends Component<{}, State> {
+    state: State = {
+        stations: emptyStations
+    }
+
+    componentDidMount() {
+        getStations().then(stations => this.setState({ stations }));
 
         const interval = setInterval(() => {
-            getStations().then(setStations);
+            getStations().then(stations => this.setState({ stations }));
         }, 15 * 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }
 
-    return stations;
+    render() {
+        return (
+            <StationsContext.Provider value={this.state.stations}>
+                {this.props.children}
+            </StationsContext.Provider>
+        );
+    }
 }
 
 async function getStations(): Promise<Station[]> {

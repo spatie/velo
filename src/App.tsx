@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Layout from "./components/Layout";
 import Compass from "./components/Compass";
 import Station from "./components/Station";
-import useStations from "./hooks/useStations";
+import StationsContext from "./context/StationsContext";
 
 export default function App() {
-    const stations = useStations();
+    const stations = useContext(StationsContext);
 
     return (
         <Layout>
