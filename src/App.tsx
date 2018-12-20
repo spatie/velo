@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Layout from "./components/Layout";
 import Compass from "./components/Compass";
 import Station from "./components/Station";
-import StationsContext from "./context/StationsContext";
+import StationsContext from "./contexts/StationsContext";
 
 export default function App() {
     const stations = useContext(StationsContext);
