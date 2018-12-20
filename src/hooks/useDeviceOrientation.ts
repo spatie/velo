@@ -6,19 +6,25 @@ type DeviceOrientationEvent = {
 };
 
 export default function useDeviceOrientation(): number {
-    const [direction, setDirection] = useState(0);
+    const [deviceOrientation, setDeviceOrientation] = useState(0);
 
     useEffect(() => {
-        window.addEventListener("deviceorientation", e => {
-            const { webkitCompassHeading, alpha } = (e as unknown) as DeviceOrientationEvent;
+        const handleDeviceOrientationChange = () => {
+            const { webkitCompassHeading, alpha } = (event as unknown) as DeviceOrientationEvent;
 
             if (webkitCompassHeading) {
-                setDirection(webkitCompassHeading);
+                setDeviceOrientation(webkitCompassHeading);
             } else if (alpha) {
-                setDirection(alpha);
+                setDeviceOrientation(alpha);
             }
-        });
+        };
+
+        window.addEventListener("deviceorientation", handleDeviceOrientationChange);
+
+        return () => {
+            window.removeEventListener("deviceorientation", handleDeviceOrientationChange);
+        };
     }, []);
 
-    return direction;
+    return deviceOrientation;
 }

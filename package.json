@@ -7,7 +7,7 @@
     "dev": "node server.js",
     "now-build": "next build && next export -o dist",
     "format": "prettier --write '**/*.{js,ts,tsx}'",
-    "type-check": "tsc"
+    "tsc": "tsc"
   },
   "dependencies": {
     "@zeit/next-typescript": "^1.1.1",

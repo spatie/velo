@@ -5,21 +5,27 @@ export default function useCurrentPosition(): LatLng | null {
     const [currentPosition, setCurrentPosition] = useState<LatLng | null>(null);
 
     useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(e => {
-                setCurrentPosition({
-                    longitude: e.coords.longitude,
-                    latitude: e.coords.latitude,
-                });
-            });
-
-            navigator.geolocation.watchPosition(e => {
-                setCurrentPosition({
-                    longitude: e.coords.longitude,
-                    latitude: e.coords.latitude,
-                });
-            });
+        if (!navigator.geolocation) {
+            return () => {};
         }
+
+        navigator.geolocation.getCurrentPosition(e => {
+            setCurrentPosition({
+                longitude: e.coords.longitude,
+                latitude: e.coords.latitude,
+            });
+        });
+
+        const watcher = navigator.geolocation.watchPosition(e => {
+            setCurrentPosition({
+                longitude: e.coords.longitude,
+                latitude: e.coords.latitude,
+            });
+        });
+
+        return () => {
+            navigator.geolocation.clearWatch(watcher);
+        };
     }, []);
 
     return currentPosition;
