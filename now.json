@@ -1,7 +1,7 @@
 {
     "version": 2,
     "builds": [
-        { "src": "package.json", "use": "@now/static-build" },
+        { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "build" } },
         { "src": "api/stations/index.js", "use": "@now/node" }
     ]
 }

@@ -8,7 +8,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "now-build": "next build && next export -o dist",
+    "now-build": "react-scripts build",
     "format": "prettier --write '**/*.{css,js,ts,tsx}'",
     "type-check": "tsc --noUnusedLocals --noUnusedParameters"
   },
