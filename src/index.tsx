@@ -6,14 +6,15 @@ import ReactDOM from "react-dom";
 import { StationsProvider } from "./contexts/StationsContext";
 import { CurrentPositionProvider } from "./contexts/CurrentPositionContext";
 import { DeviceOrientationProvider } from "./contexts/DeviceOrientationContext";
+import { compose } from "./util";
+
+const ProvisionedApp = compose([
+    StationsProvider,
+    CurrentPositionProvider,
+    DeviceOrientationProvider,
+])(App);
 
 ReactDOM.render(
-    <StationsProvider>
-        <CurrentPositionProvider>
-            <DeviceOrientationProvider>
-                <App />,
-            </DeviceOrientationProvider>
-        </CurrentPositionProvider>
-    </StationsProvider>,
+    <ProvisionedApp />,
     document.getElementById("root"),
 );

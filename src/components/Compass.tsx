@@ -2,15 +2,15 @@ import React, { useContext, useMemo } from "react";
 import { LatLng } from "../types";
 import useBearing from "../hooks/useBearing";
 import useDistance from "../hooks/useDistance";
-import CurrentPositionContext from "../context/CurrentPositionContext";
-import DeviceOrientationContext from "../context/DeviceOrientationContext";
+import useCurrentPosition from "../hooks/useCurrentPosition";
+import useDeviceOrientation from "../hooks/useDeviceOrientation";
 
 type Props = {
     destination: LatLng;
 };
 
 export default function Compass({ destination }: Props) {
-    const currentPosition = useContext(CurrentPositionContext);
+    const currentPosition = useCurrentPosition();
 
     if (!currentPosition) {
         return <div />;
@@ -18,7 +18,7 @@ export default function Compass({ destination }: Props) {
 
     const bearing = useBearing(currentPosition, destination);
     const distance = useDistance(currentPosition, destination);
-    const deviceOrientation = useContext(DeviceOrientationContext);
+    const deviceOrientation = useDeviceOrientation();
     const rotation = bearing - deviceOrientation;
 
     return useMemo(
