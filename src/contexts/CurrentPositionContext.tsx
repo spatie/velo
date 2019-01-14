@@ -10,6 +10,8 @@ type State = {
 }
 
 export class CurrentPositionProvider extends Component<{}, State> {
+    watcher: number = 0;
+
     state: State = {
         position: null
     }
@@ -28,7 +30,7 @@ export class CurrentPositionProvider extends Component<{}, State> {
             }));
         });
 
-        navigator.geolocation.watchPosition(e => {
+        this.watcher = navigator.geolocation.watchPosition(e => {
             this.setState(() => ({
                 position: {
                     longitude: e.coords.longitude,
@@ -36,6 +38,14 @@ export class CurrentPositionProvider extends Component<{}, State> {
                 }
             }));
         });
+    }
+
+    componentWillUnmount() {
+        if (!this.watcher) {
+            return;
+        }
+
+        navigator.geolocation.clearWatch(this.watcher);
     }
 
     render() {

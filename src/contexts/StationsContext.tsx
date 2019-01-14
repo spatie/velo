@@ -41,6 +41,8 @@ type State = {
 }
 
 export class StationsProvider extends Component<{}, State> {
+    poller: number = 0;
+
     state: State = {
         stations: emptyStations
     }
@@ -48,11 +50,17 @@ export class StationsProvider extends Component<{}, State> {
     componentDidMount() {
         getStations().then(stations => this.setState({ stations }));
 
-        const interval = setInterval(() => {
+        this.poller = window.setInterval(() => {
             getStations().then(stations => this.setState({ stations }));
         }, 15 * 1000);
+    }
 
-        return () => clearInterval(interval);
+    componentWillUnmount() {
+        if (!this.poller) {
+            return;
+        }
+
+        clearInterval(this.poller);
     }
 
     render() {

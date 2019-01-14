@@ -18,22 +18,26 @@ export class DeviceOrientationProvider extends Component<{}, State> {
         deviceOrientation: 0
     }
 
+    handleDeviceOrientationChange = (event: any) => {
+        const { webkitCompassHeading, alpha } = event as DeviceOrientationEvent;
+
+        if (webkitCompassHeading) {
+            this.setState(() => ({
+                deviceOrientation: webkitCompassHeading
+            }));
+        } else if (alpha) {
+            this.setState(() => ({
+                deviceOrientation: alpha
+            }));
+        }
+    };
+
     componentDidMount() {
-        const handleDeviceOrientationChange = () => {
-            const { webkitCompassHeading, alpha } = (event as unknown) as DeviceOrientationEvent;
+        window.addEventListener("deviceorientation", this.handleDeviceOrientationChange);
+    }
 
-            if (webkitCompassHeading) {
-                this.setState(() => ({
-                    deviceOrientation: webkitCompassHeading
-                }));
-            } else if (alpha) {
-                this.setState(() => ({
-                    deviceOrientation: alpha
-                }));
-            }
-        };
-
-        window.addEventListener("deviceorientation", handleDeviceOrientationChange);
+    componentWillUnmount() {
+        window.removeEventListener("deviceorientation", this.handleDeviceOrientationChange);
     }
 
     render() {
